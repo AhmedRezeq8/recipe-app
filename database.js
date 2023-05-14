@@ -1,4 +1,6 @@
 import { Sequelize } from "sequelize";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 require("dotenv").config();
 
 const sequelize = new Sequelize(

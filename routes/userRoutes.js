@@ -1,44 +1,72 @@
-import { Router } from "express";
-const router = Router();
-import { create, findAll, update, destroy } from "../models/User";
+import express from "express";
+import User from "../models/User.js";
 
-// CREATE
-router.post("/users", async (req, res) => {
+const router = express.Router();
+
+// Create a user
+router.post("/user", async (req, res) => {
   try {
-    const user = await create(req.body);
+    const user = await User.create(req.body);
     res.status(201).json(user);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// READ
+// Get all users
 router.get("/users", async (req, res) => {
   try {
-    const users = await findAll();
+    const users = await User.findAll();
     res.json(users);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// UPDATE
-router.put("/users/:id", async (req, res) => {
+// Get a user by ID
+router.get("/user/:id", async (req, res) => {
   try {
-    await update(req.body, { where: { user_id: req.params.id } });
-    res.json({ message: "User updated successfully" });
+    const user = await User.findByPk(req.params.id);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// DELETE
-router.delete("/users/:id", async (req, res) => {
+// Update a user
+router.put("/user/:id", async (req, res) => {
   try {
-    await destroy({ where: { user_id: req.params.id } });
-    res.json({ message: "User deleted successfully" });
+    const [numUpdated] = await User.update(req.body, {
+      where: { user_id: req.params.id },
+    });
+    if (numUpdated) {
+      const updatedUser = await User.findByPk(req.params.id);
+      res.json(updatedUser);
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete a user
+router.delete("/user/:id", async (req, res) => {
+  try {
+    const deleted = await User.destroy({
+      where: { user_id: req.params.id },
+    });
+    if (deleted) {
+      res.status(204).send("User deleted");
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

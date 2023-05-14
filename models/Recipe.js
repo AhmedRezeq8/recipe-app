@@ -1,8 +1,8 @@
-import { Sequelize, DataTypes } from "sequelize";
-import { define } from "../database";
-import User, { hasMany } from "./User";
+import { DataTypes, Sequelize } from "sequelize";
+import sequelize from "../database.js";
+import User from "./User.js";
 
-const Recipe = define(
+const Recipe = sequelize.define(
   "Recipe",
   {
     recipe_id: {
@@ -48,7 +48,7 @@ const Recipe = define(
   }
 );
 
-hasMany(Recipe, { foreignKey: "user_id" });
+User.hasMany(Recipe, { foreignKey: "user_id" });
 Recipe.belongsTo(User, { foreignKey: "user_id" });
 
 export default Recipe;

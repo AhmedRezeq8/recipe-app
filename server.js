@@ -15,14 +15,14 @@ app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
 );
 
-const userRoutes = require("./routes/userRoutes");
-const recipeRoutes = require("./routes/recipeRoutes");
-const ingredientRoutes = require("./routes/ingredientRoutes");
-const stepRoutes = require("./routes/stepRoutes");
-const reviewRoutes = require("./routes/reviewRoutes");
+import userRoutes from "./routes/userRoutes.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
+// import ingredientRoutes from "./routes/ingredientRoutes.js";
+// import stepRoutes from "./routes/stepRoutes.js";
+// import reviewRoutes from "./routes/reviewRoutes.js";
 
 app.use("/api", userRoutes);
 app.use("/api", recipeRoutes);
-app.use("/api", ingredientRoutes);
-app.use("/api", stepRoutes);
-app.use("/api", reviewRoutes);
+// app.use("/api", ingredientRoutes);
+// app.use("/api", stepRoutes);
+// app.use("/api", reviewRoutes);

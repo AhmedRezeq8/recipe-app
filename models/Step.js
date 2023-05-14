@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import { define } from "../database";
-import Recipe, { hasMany } from "./Recipe";
+import { define } from "../database.js";
+import Recipe, { hasMany } from "./Recipe.js";
 
 const Step = define(
   "Step",

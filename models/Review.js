@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import { define } from "../database";
-import User, { hasMany } from "./User";
-import Recipe, { hasMany as _hasMany } from "./Recipe";
+import { define } from "../database.js";
+import User, { hasMany } from "./User.js";
+import Recipe, { hasMany as _hasMany } from "./Recipe.js";
 
 const Review = define(
   "Review",
